@@ -29,7 +29,7 @@ import javax.servlet.ServletResponse;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://172.20.10.5:3000/NewResearcher")
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired

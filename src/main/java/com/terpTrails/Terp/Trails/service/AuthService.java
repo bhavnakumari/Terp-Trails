@@ -51,7 +51,7 @@ public class AuthService {
 
         // Persist the new volunteer record
         VolunteerRegistration savedVolunteer = volunteerRepository.save(volunteer);
-        System.out.println("Saved volunteer: " + savedVolunteer.getVolunteerId());
+        System.out.println("Saved volunteer: " + savedVolunteer.getId());
 
 
         return ResponseEntity.ok("Volunteer registered successfully!");
@@ -79,7 +79,7 @@ public class AuthService {
 
         // Persist the new volunteer record
         FirmRegistration savedFirm = firmRepository.save(firm);
-        System.out.println("Saved Firm: " + savedFirm.getFirmId());
+        System.out.println("Saved Firm: " + savedFirm.getId());
 
 
         return ResponseEntity.ok("Research firm registered successfully!");
