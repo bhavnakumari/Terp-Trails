@@ -1,23 +1,16 @@
-package com.terpTrails.Terp.Trails.dto;
+package com.example.terpTrails.Terp.Trails.dto;
 
 public class ParticipantDTO {
     private String id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String dateOfBirth;
     private String email;
-    //private String message;
 
-
-    public ParticipantDTO(String id, String name, int age, String email) {
+    public ParticipantDTO(String id, String firstName, String lastName, String dateOfBirth, String email) {
         this.id = id;
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.email = email;
-    }
-
-    public ParticipantDTO(String id, String name, String dateOfBirth, String email) {
-        this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
     }
@@ -30,6 +23,22 @@ public class ParticipantDTO {
         this.id = id;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getDateOfBirth() {
         return dateOfBirth;
     }
@@ -37,15 +46,6 @@ public class ParticipantDTO {
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 
     public String getEmail() {
         return email;

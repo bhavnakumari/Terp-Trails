@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface PostingRepository extends MongoRepository<Posting, Long> {
     // Additional custom query methods if needed
     Optional<Posting> findById(String id);
-    List<Posting> findByResearchFirmId(String firmId);
+    List<Posting> findByResearchFirmId(String researchFirmId);
 
 }

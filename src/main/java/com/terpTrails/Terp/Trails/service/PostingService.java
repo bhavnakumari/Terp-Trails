@@ -1,6 +1,7 @@
 package com.terpTrails.Terp.Trails.service;
 
 
+import com.example.terpTrails.Terp.Trails.dto.ParticipantDTO;
 import com.terpTrails.Terp.Trails.Entity.Applications;
 import com.terpTrails.Terp.Trails.Entity.FirmRegistration;
 import com.terpTrails.Terp.Trails.Entity.Posting;
@@ -9,7 +10,7 @@ import com.terpTrails.Terp.Trails.Repository.ApplicationRepository;
 import com.terpTrails.Terp.Trails.Repository.FirmRepository;
 import com.terpTrails.Terp.Trails.Repository.PostingRepository;
 import com.terpTrails.Terp.Trails.Repository.VolunteerRepository;
-import com.terpTrails.Terp.Trails.dto.ParticipantDTO;
+
 import com.terpTrails.Terp.Trails.dto.PostingRequest;
 import com.terpTrails.Terp.Trails.dto.PostingWithApplicantsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,30 +103,26 @@ public class PostingService {
     }
 
     public ResponseEntity<List<PostingWithApplicantsDTO>> getFirmPostingsWithApplicants(String firmId) {
-        // 1. Fetch postings by firm
         List<Posting> postings = postingRepository.findByResearchFirmId(firmId);
-
-        // 2. For each posting, fetch the applications and transform them into ParticipantDTO objects.
         List<PostingWithApplicantsDTO> result = postings.stream().map(posting -> {
-            // Fetch applications for this posting
+            // Retrieve all applications for this posting
             List<Applications> applications = applicationRepository.findByPostingIdIn(List.of(posting.getId()));
-            // Map each application to a ParticipantDTO by looking up volunteer details.
             List<ParticipantDTO> participants = applications.stream().map(application -> {
                 Optional<VolunteerRegistration> volunteerOpt = volunteerRepository.findById(application.getId());
-                VolunteerRegistration volunteer = volunteerOpt.orElse(new VolunteerRegistration());  // In production, better error handling is needed.
+                VolunteerRegistration volunteer = volunteerOpt.orElse(new VolunteerRegistration());
                 return new ParticipantDTO(
                         volunteer.getId(),
                         volunteer.getFirstName(),
-                        volunteer.getDateOfBirth(),
-                        volunteer.getEmail());
+                        volunteer.getLastName(),
+                        volunteer.getDateOfBirth(),  // dateOfBirth as String
+                        volunteer.getEmail()
+                );
             }).collect(Collectors.toList());
 
-            // Map posting and its applicants to a PostingWithApplicantsDTO object.
             PostingWithApplicantsDTO dto = new PostingWithApplicantsDTO();
             dto.setPostingid(posting.getId());
             dto.setTitle(posting.getPostTitle());
             dto.setDescription(posting.getPostDescription());
-            // Assuming your Posting has startDate, endDate, and compensation fields
             dto.setStartDate(posting.getStartDate());
             dto.setEndDate(posting.getEndDate());
             dto.setCompensation(posting.getPaidOrUnpaid());

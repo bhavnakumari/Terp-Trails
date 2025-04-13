@@ -29,8 +29,7 @@ public class AuthService {
 
     // Volunteer registration
     public ResponseEntity<?> registerVolunteer(VolunteerRegisterRequest request) {
-        if (volunteerRepository.existsByUsername(request.getUsername())
-                || volunteerRepository.existsByEmail(request.getEmail())) {
+        if (volunteerRepository.existsByEmail(request.getEmail())) {
             return ResponseEntity.badRequest().body("Volunteer with given username or email already exists.");
         }
         VolunteerRegistration volunteer = new VolunteerRegistration();

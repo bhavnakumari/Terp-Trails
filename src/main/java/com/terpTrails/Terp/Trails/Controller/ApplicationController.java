@@ -3,8 +3,10 @@ package com.terpTrails.Terp.Trails.Controller;
 import com.terpTrails.Terp.Trails.Entity.Applications;
 import com.terpTrails.Terp.Trails.Entity.RecommenderResponse;
 import com.terpTrails.Terp.Trails.dto.ApplicationRequest;
+import com.terpTrails.Terp.Trails.dto.PostingWithApplicantsDTO;
 import com.terpTrails.Terp.Trails.dto.RecommendRequest;
 import com.terpTrails.Terp.Trails.service.ApplicationService;
+import com.terpTrails.Terp.Trails.service.PostingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -23,6 +25,9 @@ public class ApplicationController {
 
     @Autowired
     private ApplicationService applicationService;
+
+    @Autowired
+    private PostingService postingService;
 
 
 
@@ -51,9 +56,14 @@ public class ApplicationController {
 
         return ResponseEntity.ok(percentage);
     }
-    @GetMapping("/by-firm")
+    //@GetMapping("/by-firm")
     public ResponseEntity<List<Applications>> getApplicantsByFirm(@RequestParam String firmId) {
         return applicationService.getApplicantsForFirm(firmId);
+    }
+
+    @GetMapping("/by-firm")
+    public ResponseEntity<List<PostingWithApplicantsDTO>> getFirmPostingsWithApplicants(@RequestParam String firmId) {
+        return postingService.getFirmPostingsWithApplicants(firmId);
     }
 
 }
