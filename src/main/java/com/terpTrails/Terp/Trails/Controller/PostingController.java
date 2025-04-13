@@ -29,6 +29,10 @@ public class PostingController {
     }
 
 
+    @GetMapping("/firm")
+    public ResponseEntity<List<Posting>> getPostingsForFirm(@RequestParam String firmId) {
+        return postingService.getPostingsForFirm(firmId);
+    }
 
 
 

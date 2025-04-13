@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationService {
@@ -59,6 +60,24 @@ public class ApplicationService {
 
     public ResponseEntity<?> getApplicationsForPosting(String postingId) {
         List<Applications> applications = applicationRepository.findByPostingId(postingId);
+        return ResponseEntity.ok(applications);
+    }
+
+    public ResponseEntity<List<Applications>> getApplicantsForFirm(String firmId) {
+        // 1. Retrieve all postings created by this firm.
+        List<Posting> firmPostings = postingRepository.findByResearchFirmId(firmId);
+        if (firmPostings == null || firmPostings.isEmpty()) {
+            return ResponseEntity.ok(List.of());
+        }
+
+        // 2. Extract posting IDs.
+        List<String> postingIds = firmPostings.stream()
+                .map(Posting::getId)
+                .collect(Collectors.toList());
+
+        // 3. Retrieve all applications where postingId is in the list of postingIds.
+        List<Applications> applications = applicationRepository.findByPostingIdIn(postingIds);
+
         return ResponseEntity.ok(applications);
     }
 

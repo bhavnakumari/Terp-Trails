@@ -8,4 +8,5 @@ import java.util.List;
 public interface ApplicationRepository extends MongoRepository<Applications, String> {
     // Retrieve all applications for a given posting ID
     List<Applications> findByPostingId(String postingId);
+    List<Applications> findByPostingIdIn(List<String> postingIds);
 }

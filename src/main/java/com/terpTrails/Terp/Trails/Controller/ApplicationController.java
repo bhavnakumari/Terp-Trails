@@ -1,5 +1,6 @@
 package com.terpTrails.Terp.Trails.Controller;
 
+import com.terpTrails.Terp.Trails.Entity.Applications;
 import com.terpTrails.Terp.Trails.Entity.RecommenderResponse;
 import com.terpTrails.Terp.Trails.dto.ApplicationRequest;
 import com.terpTrails.Terp.Trails.dto.RecommendRequest;
@@ -12,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/applications")
@@ -33,9 +36,24 @@ public class ApplicationController {
     @GetMapping("/by-posting/{postingId}")
     public ResponseEntity<?> getApplicationsByPosting(@PathVariable String postingId) {
         return applicationService.getApplicationsForPosting(postingId);
+
     }
 
+    @PostMapping("/calculateScorePercentage")
+    public ResponseEntity<Integer> calculateScorePercentage(@RequestBody List<Integer> responses) {
+        int total = responses.size();
+        if (total == 0) {
+            return ResponseEntity.ok(0); // Avoid division by zero
+        }
 
+        int sum = responses.stream().mapToInt(Integer::intValue).sum();
+        int percentage = (int) Math.round((sum * 100.0) / total);
 
+        return ResponseEntity.ok(percentage);
+    }
+    @GetMapping("/by-firm")
+    public ResponseEntity<List<Applications>> getApplicantsByFirm(@RequestParam String firmId) {
+        return applicationService.getApplicantsForFirm(firmId);
+    }
 
 }
