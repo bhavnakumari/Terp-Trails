@@ -13,6 +13,35 @@ public class PostingRequest {
     // New field: if true, user can provide extra requirements (up to 5).
     private boolean allowExtraRequirements;
 
+    private String startDate;
+    private String endDate;
+
+    private String postedDate;
+
+    public String getPostedDate() {
+        return postedDate;
+    }
+
+    public void setPostedDate(String postedDate) {
+        this.postedDate = postedDate;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
     public String getTitle() {
         return title;
     }

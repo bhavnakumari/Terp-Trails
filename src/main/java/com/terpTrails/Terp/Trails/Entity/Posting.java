@@ -38,7 +38,25 @@ public class Posting {
     private boolean allowExtraRequirements; // If true, extra requirements are allowed
 
     // Timestamp for when the post was created.
-    private LocalDateTime postedAt;
+    private String postedAt;
+    private String startDate;
+    private String endDate;
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
     public String getResearchFirmId() {
         return researchFirmId;
@@ -104,11 +122,11 @@ public class Posting {
         this.allowExtraRequirements = allowExtraRequirements;
     }
 
-    public LocalDateTime getPostedAt() {
+    public String getPostedAt() {
         return postedAt;
     }
 
-    public void setPostedAt(LocalDateTime postedAt) {
+    public void setPostedAt(String postedAt) {
         this.postedAt = postedAt;
     }
 }

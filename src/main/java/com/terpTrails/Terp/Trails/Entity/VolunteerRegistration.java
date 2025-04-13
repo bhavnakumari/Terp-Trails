@@ -25,13 +25,13 @@ public class VolunteerRegistration {
     private String lastName;
     private String gender;
     private String departmentName;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String weight;
     private String height;
-    @ElementCollection(fetch = FetchType.EAGER)
+/*    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "volunteer_interests", joinColumns = @JoinColumn(name = "volunteer_id"))
     @Column(name = "interest")
-    private List<String> Interests;
+    private List<String> Interests;*/
     private String username;
     private String email;
     private String password;
@@ -77,11 +77,11 @@ public class VolunteerRegistration {
         this.departmentName = departmentName;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -101,13 +101,7 @@ public class VolunteerRegistration {
         this.height = height;
     }
 
-    public List<String> getInterests() {
-        return Interests;
-    }
 
-    public void setInterests(List<String> interests) {
-        Interests = interests;
-    }
 
     public String getUsername() {
         return username;

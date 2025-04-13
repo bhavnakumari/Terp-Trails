@@ -50,7 +50,7 @@ public class SecurityConfig {
                         // Permit all OPTIONS requests
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // Permit specific endpoints
-                        .requestMatchers("/", "/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/api/postings/**").permitAll()
+                        .requestMatchers("/", "/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/api/postings/**","/api/applications/**","/api/recommend").permitAll()
                         // Any other requests (for this test, you can permit all)
                         .anyRequest().permitAll()
                 );

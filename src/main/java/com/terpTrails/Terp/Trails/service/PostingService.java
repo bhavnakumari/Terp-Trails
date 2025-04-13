@@ -42,7 +42,10 @@ public class PostingService {
         posting.setResearchFirmId(researchFirmId);
         // If you chose the simpler approach storing only the firm ID, use:
         // posting.setResearchFirmId(researchFirmId);
-        posting.setPostedAt(LocalDateTime.now());
+        String postedDate= String.valueOf(LocalDateTime.now());
+        posting.setPostedAt(String.valueOf(postedDate));
+        posting.setStartDate(String.valueOf(postingRequest.getStartDate()));
+        posting.setEndDate(String.valueOf(postingRequest.getEndDate()));
 
         if (postingRequest.isAllowExtraRequirements()) {
             // Call the external API to fetch extra requirements.
@@ -71,8 +74,12 @@ public class PostingService {
 
         // Persist the new volunteer record
         Posting savedPosting = postingRepository.save(posting);
-        System.out.println("Saved Firm: " + savedPosting.getId());
+        System.out.println("Saved posting: " + savedPosting.getId());
 
         return ResponseEntity.ok("Post created successfully!");
+    }
+    public ResponseEntity<List<Posting>> getAllPosts() {
+        List<Posting> posts = postingRepository.findAll();
+        return ResponseEntity.ok(posts);
     }
 }

@@ -4,6 +4,16 @@ public class LoginRequest {
     private String email;
     private String password;
 
+    public String getIsVolunteer() {
+        return isVolunteer;
+    }
+
+    public void setIsVolunteer(String isVolunteer) {
+        this.isVolunteer = isVolunteer;
+    }
+
+    private String isVolunteer;
+
     public String getEmail() {
         return email;
     }
@@ -19,4 +29,6 @@ public class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

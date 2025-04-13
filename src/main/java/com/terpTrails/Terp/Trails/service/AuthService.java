@@ -41,8 +41,8 @@ public class AuthService {
         volunteer.setDateOfBirth(request.getDateOfBirth());
         volunteer.setWeight(request.getWeight());
         volunteer.setHeight(request.getHeight());
-        volunteer.setInterests(request.getInterests()); // Ensure Volunteer entity supports a List<String> (e.g., via @ElementCollection)
-        volunteer.setUsername(request.getUsername());
+        //volunteer.setInterests(request.getInterests()); // Ensure Volunteer entity supports a List<String> (e.g., via @ElementCollection)
+        //volunteer.setUsername(request.getUsername());
         volunteer.setEmail(request.getEmail());
 
         // Store the password securely by hashing it before saving
@@ -86,29 +86,33 @@ public class AuthService {
     }
 
     public ResponseEntity<?> authenticate(LoginRequest loginRequest) {
-        // Try to authenticate as a volunteer using the username
-        Optional<VolunteerRegistration> volunteerOpt = volunteerRepository.findByEmail(loginRequest.getEmail());
-        if (volunteerOpt.isPresent()) {
-            VolunteerRegistration volunteer = volunteerOpt.get();
-            if (passwordEncoder.matches(loginRequest.getPassword(), volunteer.getPassword())) {
-                // TODO: Generate a JWT token for the volunteer
-                return ResponseEntity.ok("JWT token for volunteer");
-            } else {
-                return ResponseEntity.badRequest().body("Invalid credentials for volunteer.");
-            }
-        }
 
-        // Try to authenticate as a research firm using email (or username if applicable)
-        Optional<FirmRegistration> researchFirmOpt = firmRepository.findByEmail(loginRequest.getEmail());
-        if (researchFirmOpt.isPresent()) {
-            FirmRegistration firm = researchFirmOpt.get();
-            if (passwordEncoder.matches(loginRequest.getPassword(), firm.getPassword())) {
-                // TODO: Generate a JWT token for the research firm
-                return ResponseEntity.ok("JWT token for research firm");
-            } else {
-                return ResponseEntity.badRequest().body("Invalid credentials for research firm.");
+            // Try to authenticate as a volunteer using the username
+            Optional<VolunteerRegistration> volunteerOpt = volunteerRepository.findByEmail(loginRequest.getEmail());
+            if (volunteerOpt.isPresent()) {
+                VolunteerRegistration volunteer = volunteerOpt.get();
+                if (passwordEncoder.matches(loginRequest.getPassword(), volunteer.getPassword())) {
+                    // TODO: Generate a JWT token for the volunteer
+                    String volunteerId= volunteer.getId();
+                    return ResponseEntity.ok("volunteer,"+volunteerId);
+                } else {
+                    return ResponseEntity.badRequest().body("Invalid credentials for volunteer.");
+                }
             }
-        }
+
+            // Try to authenticate as a research firm using email (or username if applicable)
+            Optional<FirmRegistration> researchFirmOpt = firmRepository.findByEmail(loginRequest.getEmail());
+            if (researchFirmOpt.isPresent()) {
+                FirmRegistration firm = researchFirmOpt.get();
+                if (passwordEncoder.matches(loginRequest.getPassword(), firm.getPassword())) {
+                    // TODO: Generate a JWT token for the research firm
+                    String firmId= firm.getId();
+                    return ResponseEntity.ok("firm,"+firmId);
+                } else {
+                    return ResponseEntity.badRequest().body("Invalid credentials for research firm.");
+                }
+            }
+
 
         // If not found in either repository, return an error
         return ResponseEntity.badRequest().body("User not found with the provided credentials.");

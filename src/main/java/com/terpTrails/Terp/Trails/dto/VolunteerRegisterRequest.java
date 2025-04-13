@@ -10,10 +10,10 @@ public class VolunteerRegisterRequest {
     private String lastName;
     private String gender;
     private String departmentName;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String weight;
     private String height;
-    private List<String> Interests;
+    //private List<String> Interests;
     @Indexed(unique = true)
     private String username;
     @Indexed(unique = true)
@@ -53,11 +53,11 @@ public class VolunteerRegisterRequest {
         this.departmentName = departmentName;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -77,13 +77,7 @@ public class VolunteerRegisterRequest {
         this.height = height;
     }
 
-    public List<String> getInterests() {
-        return Interests;
-    }
 
-    public void setInterests(List<String> interests) {
-        Interests = interests;
-    }
 
     public String getUsername() {
         return username;
